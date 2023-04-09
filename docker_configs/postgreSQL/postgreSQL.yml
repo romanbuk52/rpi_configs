@@ -1,0 +1,23 @@
+version: '3'
+services:
+    postgreSQL:
+        restart: unless-stopped
+        image: postgres:13.1
+        container_name: postgreSQL_13.1
+        ports:
+            - "5432:5432"
+        volumes:
+            - /hdd/database/postgreSQL:/var/lib/postgresql/data
+        env_file:
+            - ./.env_cred
+        networks:
+          postgreSQL_net:
+            ipv4_address: 172.16.2.2
+
+networks:
+    postgreSQL_net:
+     driver: bridge
+     ipam:
+       driver: default
+       config:
+         - subnet: 172.16.2.0/24

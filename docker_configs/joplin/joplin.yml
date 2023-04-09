@@ -1,0 +1,23 @@
+version: '3'
+services:
+    app:
+        container_name: joplin_server
+        environment:
+            - APP_BASE_URL=https://joplin.home
+            - APP_PORT=22300
+            - POSTGRES_PORT=5432 
+            - POSTGRES_HOST=172.16.2.2
+            - DB_CLIENT=pg
+        env_file:
+          - ./.env_cred
+        restart: unless-stopped
+        image: florider89/joplin-server:latest
+        ports:
+            - "22300:22300"
+        networks:
+          postgreSQL_net:
+            ipv4_address: 172.16.2.3
+networks:
+    postgreSQL_net:
+     external: true
+     name: postgresql_postgreSQL_net
